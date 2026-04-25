@@ -1,567 +1,709 @@
 <!DOCTYPE html>
+<!-- 
+  QCM Examen Civique - Outil d'entraînement non officiel
+  Auteur : Mahmoud Fakhri SOUAYAH - Licence MIT
+  Ce projet n'est pas affilié au gouvernement français.
+-->
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QCM Examen Civique</title>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState } = React;
+      const { useState } = React;
 
-        const QCMExamenCivique = () => {
-          const questionsData = {
-            "Principes et valeurs de la République": [
-              {
-                q: "Quelle est la devise de la France ?",
-                r: "Liberté, Égalité, Fraternité",
-                d: ["Liberté, Justice, Fraternité", "Égalité, Justice, Solidarité", "Unité, Liberté, Fraternité"]
-              },
-              {
-                q: "Que représente Marianne ?",
-                r: "Le symbole de la République française",
-                d: ["La première femme présidente", "Une héroïne de la Révolution", "La déesse de la Justice"]
-              },
-              {
-                q: "Qu'est-ce que la Marseillaise ?",
-                r: "L'hymne national français",
-                d: ["Une chanson révolutionnaire", "Un chant militaire", "Une danse traditionnelle"]
-              },
-              {
-                q: "Complétez : \"Aux armes […] ! Formez vos bataillons\"",
-                r: "Citoyens",
-                d: ["Soldats", "Français", "Patriotes"]
-              },
-              {
-                q: "En quelle année la loi de séparation des Églises et de l'État a-t-elle été votée ?",
-                r: "1905",
-                d: ["1789", "1881", "1946"]
-              },
-              {
-                q: "À l'école publique, qui peut porter des signes religieux très visibles ?",
-                r: "Personne (les élèves ne peuvent pas porter de signes religieux ostensibles)",
-                d: ["Tous les élèves", "Seulement les enseignants", "Les parents d'élèves"]
-              },
-              {
-                q: "Que dit l'article 1er de la Constitution française ?",
-                r: "La France est une République indivisible, laïque, démocratique et sociale",
-                d: ["La France est une République démocratique et parlementaire", "La France est un État de droit et social", "La France est une République libre et égalitaire"]
-              },
-              {
-                q: "Une personne a-t-elle le droit de ne pas croire en une religion ?",
-                r: "Oui, la liberté de conscience inclut le droit de ne pas croire",
-                d: ["Non, il faut choisir une religion", "Seulement si on a plus de 18 ans", "Oui, mais on doit le déclarer"]
-              },
-              {
-                q: "Peut-on brûler publiquement un drapeau français ?",
-                r: "Non, c'est un outrage au drapeau national et c'est puni par la loi",
-                d: ["Oui, c'est une liberté d'expression", "Oui, mais seulement lors de manifestations", "Non, sauf autorisation préfectorale"]
-              },
-              {
-                q: "La répudiation de sa femme est :",
-                r: "Interdite en France. Le divorce doit être prononcé par un juge",
-                d: ["Autorisée si les deux époux sont d'accord", "Autorisée pour motif religieux", "Autorisée après 10 ans de mariage"]
-              }
-            ],
-            "Système institutionnel et politique": [
-              {
-                q: "Qui nomme le Premier ministre ?",
-                r: "Le président de la République",
-                d: ["L'Assemblée nationale", "Le peuple par élection", "Le Sénat"]
-              },
-              {
-                q: "Combien de députés composent l'Assemblée nationale ?",
-                r: "577 députés",
-                d: ["348 députés", "650 députés", "450 députés"]
-              },
-              {
-                q: "Pour combien de temps sont élus les sénateurs ?",
-                r: "6 ans (renouvellement par moitié tous les 3 ans)",
-                d: ["5 ans", "7 ans", "4 ans"]
-              },
-              {
-                q: "Quels sont les trois pouvoirs dans une démocratie ?",
-                r: "Le pouvoir exécutif, législatif et judiciaire",
-                d: ["Le pouvoir politique, économique et social", "Le pouvoir présidentiel, parlementaire et local", "Le pouvoir national, régional et local"]
-              },
-              {
-                q: "Qui dirige la commune ?",
-                r: "Le maire et le conseil municipal",
-                d: ["Le préfet", "Le député", "Le conseiller régional"]
-              },
-              {
-                q: "Combien y a-t-il de régions en France ?",
-                r: "18 régions (13 en métropole et 5 outre-mer)",
-                d: ["22 régions", "13 régions", "27 régions"]
-              },
-              {
-                q: "En quelle année le traité de Maastricht a-t-il été signé ?",
-                r: "1992",
-                d: ["1957", "1986", "2002"]
-              },
-              {
-                q: "Quel État a quitté l'Union européenne en 2020 ?",
-                r: "Le Royaume-Uni (Brexit)",
-                d: ["La Suisse", "La Norvège", "La Grèce"]
-              },
-              {
-                q: "Quelle est la devise de l'Union européenne ?",
-                r: "Unie dans la diversité",
-                d: ["L'union fait la force", "Liberté et solidarité", "Paix et prospérité"]
-              },
-              {
-                q: "Quand célèbre-t-on la journée de l'Europe ?",
-                r: "Le 9 mai",
-                d: ["Le 1er mai", "Le 14 juillet", "Le 21 juin"]
-              }
-            ],
-            "Droits et devoirs": [
-              {
-                q: "La peine de mort est :",
-                r: "Abolie en France depuis 1981",
-                d: ["Toujours en vigueur pour les crimes graves", "Abolie depuis 1945", "Suspendue temporairement"]
-              },
-              {
-                q: "Le recours à l'avortement est-il autorisé ?",
-                r: "Oui, l'IVG est légale en France jusqu'à 14 semaines de grossesse",
-                d: ["Non, c'est interdit", "Oui, sans limitation de délai", "Oui, uniquement pour motif médical"]
-              },
-              {
-                q: "Qu'est-ce que la Constitution ?",
-                r: "La loi fondamentale qui organise les pouvoirs publics et garantit les droits",
-                d: ["L'ensemble des lois françaises", "Le code civil", "Le règlement du Parlement"]
-              },
-              {
-                q: "Jeter un mégot par terre est :",
-                r: "Interdit et passible d'une amende",
-                d: ["Autorisé en ville", "Toléré sauf dans les parcs", "Autorisé si on n'a pas de poubelle"]
-              },
-              {
-                q: "Que doit faire une victime de violences ?",
-                r: "Porter plainte et se faire aider (police, associations, médecins)",
-                d: ["Attendre que ça passe", "En parler seulement à sa famille", "Consulter un avocat d'abord"]
-              },
-              {
-                q: "Quel numéro permet d'appeler la police en urgence ?",
-                r: "17 (ou 112)",
-                d: ["15", "18", "114"]
-              },
-              {
-                q: "Quelle est l'infraction la plus grave ?",
-                r: "Un crime (puni d'au moins 10 ans de prison)",
-                d: ["Un délit", "Une contravention", "Une faute civile"]
-              },
-              {
-                q: "Quelle obligation concerne toutes les personnes résidant en France ?",
-                r: "Respecter les lois françaises",
-                d: ["Payer des impôts", "Voter aux élections", "Parler français"]
-              },
-              {
-                q: "Pourquoi doit-on trier ses déchets ?",
-                r: "Pour protéger l'environnement et favoriser le recyclage",
-                d: ["C'est une obligation européenne", "Pour éviter les amendes", "Pour réduire les impôts locaux"]
-              },
-              {
-                q: "Est-il toujours possible de divorcer ?",
-                r: "Oui, le divorce est un droit",
-                d: ["Non, seulement avec l'accord du conjoint", "Oui, mais après 5 ans de mariage minimum", "Non, sauf faute grave"]
-              }
-            ],
-            "Histoire géographie et culture": [
-              {
-                q: "Quel était le surnom de Louis XIV ?",
-                r: "Le Roi-Soleil",
-                d: ["Le Roi-Guerrier", "Le Roi-Bâtisseur", "Le Grand Roi"]
-              },
-              {
-                q: "En quelle année Napoléon Ier est-il devenu empereur ?",
-                r: "1804",
-                d: ["1789", "1815", "1799"]
-              },
-              {
-                q: "De quand date l'appel à la résistance du général de Gaulle ?",
-                r: "18 juin 1940",
-                d: ["14 juillet 1940", "11 novembre 1940", "1er septembre 1939"]
-              },
-              {
-                q: "En quelle année a commencé la Première Guerre mondiale ?",
-                r: "1914",
-                d: ["1918", "1939", "1870"]
-              },
-              {
-                q: "Que fête-t-on le 8 mai ?",
-                r: "La victoire des Alliés sur l'Allemagne nazie en 1945",
-                d: ["L'armistice de 1918", "La libération de Paris", "La fin de la Seconde Guerre mondiale"]
-              },
-              {
-                q: "Quel fleuve traverse Paris ?",
-                r: "La Seine",
-                d: ["La Loire", "Le Rhône", "La Garonne"]
-              },
-              {
-                q: "Quelle chaîne de montagnes est située entre la France et l'Espagne ?",
-                r: "Les Pyrénées",
-                d: ["Les Alpes", "Le Jura", "Les Vosges"]
-              },
-              {
-                q: "Quelle région est la plus peuplée ?",
-                r: "L'Île-de-France (région parisienne)",
-                d: ["Auvergne-Rhône-Alpes", "Provence-Alpes-Côte d'Azur", "Nouvelle-Aquitaine"]
-              },
-              {
-                q: "Qui était Auguste Rodin ?",
-                r: "Un sculpteur français célèbre (Le Penseur, Le Baiser)",
-                d: ["Un peintre impressionniste", "Un écrivain", "Un architecte"]
-              },
-              {
-                q: "Quelle cathédrale célèbre a été en partie détruite par un incendie en 2019 ?",
-                r: "Notre-Dame de Paris",
-                d: ["La cathédrale de Reims", "La cathédrale de Chartres", "La basilique de Lourdes"]
-              }
-            ],
-            "Vivre dans la société française": [
-              {
-                q: "Où faut-il déclarer la naissance d'un enfant ?",
-                r: "À la mairie du lieu de naissance, dans les 5 jours",
-                d: ["À l'hôpital", "À la préfecture", "Au consulat"]
-              },
-              {
-                q: "À quel âge commence l'instruction obligatoire des enfants ?",
-                r: "À 3 ans (jusqu'à 16 ans)",
-                d: ["À 6 ans", "À 5 ans", "À 4 ans"]
-              },
-              {
-                q: "Quel est l'âge de la majorité ?",
-                r: "18 ans",
-                d: ["21 ans", "16 ans", "17 ans"]
-              },
-              {
-                q: "Comment s'appelle le diplôme passé à la fin du collège ?",
-                r: "Le Diplôme National du Brevet (DNB)",
-                d: ["Le Certificat d'études", "Le BEPC", "Le CAP"]
-              },
-              {
-                q: "Travailler sans être déclaré est :",
-                r: "Interdit (travail au noir), puni par la loi",
-                d: ["Autorisé pour moins de 10h par semaine", "Toléré si c'est temporaire", "Autorisé avec accord de l'employeur"]
-              },
-              {
-                q: "Quelle est la mission de France Travail ?",
-                r: "Aider les demandeurs d'emploi à trouver un travail",
-                d: ["Former les travailleurs", "Payer les salaires", "Contrôler les entreprises"]
-              },
-              {
-                q: "Qui peut demander un congé parental d'éducation ?",
-                r: "Tout parent salarié, père ou mère",
-                d: ["Seulement la mère", "Seulement le père", "Les deux parents ensemble"]
-              },
-              {
-                q: "Concernant l'accès aux soins, quelle proposition est correcte ?",
-                r: "Toute personne a droit à des soins, avec ou sans papiers",
-                d: ["Seuls les citoyens français ont droit aux soins", "Il faut une carte vitale obligatoirement", "Les soins sont payants pour les étrangers"]
-              },
-              {
-                q: "En cas de divorce, qui exerce l'autorité parentale ?",
-                r: "Les deux parents (autorité parentale conjointe)",
-                d: ["Celui qui a la garde", "La mère uniquement", "Celui désigné par le juge"]
-              },
-              {
-                q: "Quel mariage est reconnu par l'État ?",
-                r: "Le mariage civil célébré à la mairie",
-                d: ["Le mariage religieux", "Les deux types de mariage", "Le PACS"]
-              }
-            ]
-          };
+      const QCMExamenCivique = () => {
+        const questionsData = {
+          "Principes et valeurs de la République": [
+            {
+              q: "Quelle est la devise de la France ?",
+              r: "Liberté, Égalité, Fraternité",
+              d: [
+                "Liberté, Justice, Fraternité",
+                "Égalité, Justice, Solidarité",
+                "Unité, Liberté, Fraternité",
+              ],
+            },
+            {
+              q: "Que représente Marianne ?",
+              r: "Le symbole de la République française",
+              d: [
+                "La première femme présidente",
+                "Une héroïne de la Révolution",
+                "La déesse de la Justice",
+              ],
+            },
+            {
+              q: "Qu'est-ce que la Marseillaise ?",
+              r: "L'hymne national français",
+              d: [
+                "Une chanson révolutionnaire",
+                "Un chant militaire",
+                "Une danse traditionnelle",
+              ],
+            },
+            {
+              q: 'Complétez : "Aux armes […] ! Formez vos bataillons"',
+              r: "Citoyens",
+              d: ["Soldats", "Français", "Patriotes"],
+            },
+            {
+              q: "En quelle année la loi de séparation des Églises et de l'État a-t-elle été votée ?",
+              r: "1905",
+              d: ["1789", "1881", "1946"],
+            },
+            {
+              q: "À l'école publique, qui peut porter des signes religieux très visibles ?",
+              r: "Personne (les élèves ne peuvent pas porter de signes religieux ostensibles)",
+              d: [
+                "Tous les élèves",
+                "Seulement les enseignants",
+                "Les parents d'élèves",
+              ],
+            },
+            {
+              q: "Que dit l'article 1er de la Constitution française ?",
+              r: "La France est une République indivisible, laïque, démocratique et sociale",
+              d: [
+                "La France est une République démocratique et parlementaire",
+                "La France est un État de droit et social",
+                "La France est une République libre et égalitaire",
+              ],
+            },
+            {
+              q: "Une personne a-t-elle le droit de ne pas croire en une religion ?",
+              r: "Oui, la liberté de conscience inclut le droit de ne pas croire",
+              d: [
+                "Non, il faut choisir une religion",
+                "Seulement si on a plus de 18 ans",
+                "Oui, mais on doit le déclarer",
+              ],
+            },
+            {
+              q: "Peut-on brûler publiquement un drapeau français ?",
+              r: "Non, c'est un outrage au drapeau national et c'est puni par la loi",
+              d: [
+                "Oui, c'est une liberté d'expression",
+                "Oui, mais seulement lors de manifestations",
+                "Non, sauf autorisation préfectorale",
+              ],
+            },
+            {
+              q: "La répudiation de sa femme est :",
+              r: "Interdite en France. Le divorce doit être prononcé par un juge",
+              d: [
+                "Autorisée si les deux époux sont d'accord",
+                "Autorisée pour motif religieux",
+                "Autorisée après 10 ans de mariage",
+              ],
+            },
+          ],
+          "Système institutionnel et politique": [
+            {
+              q: "Qui nomme le Premier ministre ?",
+              r: "Le président de la République",
+              d: [
+                "L'Assemblée nationale",
+                "Le peuple par élection",
+                "Le Sénat",
+              ],
+            },
+            {
+              q: "Combien de députés composent l'Assemblée nationale ?",
+              r: "577 députés",
+              d: ["348 députés", "650 députés", "450 députés"],
+            },
+            {
+              q: "Pour combien de temps sont élus les sénateurs ?",
+              r: "6 ans (renouvellement par moitié tous les 3 ans)",
+              d: ["5 ans", "7 ans", "4 ans"],
+            },
+            {
+              q: "Quels sont les trois pouvoirs dans une démocratie ?",
+              r: "Le pouvoir exécutif, législatif et judiciaire",
+              d: [
+                "Le pouvoir politique, économique et social",
+                "Le pouvoir présidentiel, parlementaire et local",
+                "Le pouvoir national, régional et local",
+              ],
+            },
+            {
+              q: "Qui dirige la commune ?",
+              r: "Le maire et le conseil municipal",
+              d: ["Le préfet", "Le député", "Le conseiller régional"],
+            },
+            {
+              q: "Combien y a-t-il de régions en France ?",
+              r: "18 régions (13 en métropole et 5 outre-mer)",
+              d: ["22 régions", "13 régions", "27 régions"],
+            },
+            {
+              q: "En quelle année le traité de Maastricht a-t-il été signé ?",
+              r: "1992",
+              d: ["1957", "1986", "2002"],
+            },
+            {
+              q: "Quel État a quitté l'Union européenne en 2020 ?",
+              r: "Le Royaume-Uni (Brexit)",
+              d: ["La Suisse", "La Norvège", "La Grèce"],
+            },
+            {
+              q: "Quelle est la devise de l'Union européenne ?",
+              r: "Unie dans la diversité",
+              d: [
+                "L'union fait la force",
+                "Liberté et solidarité",
+                "Paix et prospérité",
+              ],
+            },
+            {
+              q: "Quand célèbre-t-on la journée de l'Europe ?",
+              r: "Le 9 mai",
+              d: ["Le 1er mai", "Le 14 juillet", "Le 21 juin"],
+            },
+          ],
+          "Droits et devoirs": [
+            {
+              q: "La peine de mort est :",
+              r: "Abolie en France depuis 1981",
+              d: [
+                "Toujours en vigueur pour les crimes graves",
+                "Abolie depuis 1945",
+                "Suspendue temporairement",
+              ],
+            },
+            {
+              q: "Le recours à l'avortement est-il autorisé ?",
+              r: "Oui, l'IVG est légale en France jusqu'à 14 semaines de grossesse",
+              d: [
+                "Non, c'est interdit",
+                "Oui, sans limitation de délai",
+                "Oui, uniquement pour motif médical",
+              ],
+            },
+            {
+              q: "Qu'est-ce que la Constitution ?",
+              r: "La loi fondamentale qui organise les pouvoirs publics et garantit les droits",
+              d: [
+                "L'ensemble des lois françaises",
+                "Le code civil",
+                "Le règlement du Parlement",
+              ],
+            },
+            {
+              q: "Jeter un mégot par terre est :",
+              r: "Interdit et passible d'une amende",
+              d: [
+                "Autorisé en ville",
+                "Toléré sauf dans les parcs",
+                "Autorisé si on n'a pas de poubelle",
+              ],
+            },
+            {
+              q: "Que doit faire une victime de violences ?",
+              r: "Porter plainte et se faire aider (police, associations, médecins)",
+              d: [
+                "Attendre que ça passe",
+                "En parler seulement à sa famille",
+                "Consulter un avocat d'abord",
+              ],
+            },
+            {
+              q: "Quel numéro permet d'appeler la police en urgence ?",
+              r: "17 (ou 112)",
+              d: ["15", "18", "114"],
+            },
+            {
+              q: "Quelle est l'infraction la plus grave ?",
+              r: "Un crime (puni d'au moins 10 ans de prison)",
+              d: ["Un délit", "Une contravention", "Une faute civile"],
+            },
+            {
+              q: "Quelle obligation concerne toutes les personnes résidant en France ?",
+              r: "Respecter les lois françaises",
+              d: ["Payer des impôts", "Voter aux élections", "Parler français"],
+            },
+            {
+              q: "Pourquoi doit-on trier ses déchets ?",
+              r: "Pour protéger l'environnement et favoriser le recyclage",
+              d: [
+                "C'est une obligation européenne",
+                "Pour éviter les amendes",
+                "Pour réduire les impôts locaux",
+              ],
+            },
+            {
+              q: "Est-il toujours possible de divorcer ?",
+              r: "Oui, le divorce est un droit",
+              d: [
+                "Non, seulement avec l'accord du conjoint",
+                "Oui, mais après 5 ans de mariage minimum",
+                "Non, sauf faute grave",
+              ],
+            },
+          ],
+          "Histoire géographie et culture": [
+            {
+              q: "Quel était le surnom de Louis XIV ?",
+              r: "Le Roi-Soleil",
+              d: ["Le Roi-Guerrier", "Le Roi-Bâtisseur", "Le Grand Roi"],
+            },
+            {
+              q: "En quelle année Napoléon Ier est-il devenu empereur ?",
+              r: "1804",
+              d: ["1789", "1815", "1799"],
+            },
+            {
+              q: "De quand date l'appel à la résistance du général de Gaulle ?",
+              r: "18 juin 1940",
+              d: ["14 juillet 1940", "11 novembre 1940", "1er septembre 1939"],
+            },
+            {
+              q: "En quelle année a commencé la Première Guerre mondiale ?",
+              r: "1914",
+              d: ["1918", "1939", "1870"],
+            },
+            {
+              q: "Que fête-t-on le 8 mai ?",
+              r: "La victoire des Alliés sur l'Allemagne nazie en 1945",
+              d: [
+                "L'armistice de 1918",
+                "La libération de Paris",
+                "La fin de la Seconde Guerre mondiale",
+              ],
+            },
+            {
+              q: "Quel fleuve traverse Paris ?",
+              r: "La Seine",
+              d: ["La Loire", "Le Rhône", "La Garonne"],
+            },
+            {
+              q: "Quelle chaîne de montagnes est située entre la France et l'Espagne ?",
+              r: "Les Pyrénées",
+              d: ["Les Alpes", "Le Jura", "Les Vosges"],
+            },
+            {
+              q: "Quelle région est la plus peuplée ?",
+              r: "L'Île-de-France (région parisienne)",
+              d: [
+                "Auvergne-Rhône-Alpes",
+                "Provence-Alpes-Côte d'Azur",
+                "Nouvelle-Aquitaine",
+              ],
+            },
+            {
+              q: "Qui était Auguste Rodin ?",
+              r: "Un sculpteur français célèbre (Le Penseur, Le Baiser)",
+              d: ["Un peintre impressionniste", "Un écrivain", "Un architecte"],
+            },
+            {
+              q: "Quelle cathédrale célèbre a été en partie détruite par un incendie en 2019 ?",
+              r: "Notre-Dame de Paris",
+              d: [
+                "La cathédrale de Reims",
+                "La cathédrale de Chartres",
+                "La basilique de Lourdes",
+              ],
+            },
+          ],
+          "Vivre dans la société française": [
+            {
+              q: "Où faut-il déclarer la naissance d'un enfant ?",
+              r: "À la mairie du lieu de naissance, dans les 5 jours",
+              d: ["À l'hôpital", "À la préfecture", "Au consulat"],
+            },
+            {
+              q: "À quel âge commence l'instruction obligatoire des enfants ?",
+              r: "À 3 ans (jusqu'à 16 ans)",
+              d: ["À 6 ans", "À 5 ans", "À 4 ans"],
+            },
+            {
+              q: "Quel est l'âge de la majorité ?",
+              r: "18 ans",
+              d: ["21 ans", "16 ans", "17 ans"],
+            },
+            {
+              q: "Comment s'appelle le diplôme passé à la fin du collège ?",
+              r: "Le Diplôme National du Brevet (DNB)",
+              d: ["Le Certificat d'études", "Le BEPC", "Le CAP"],
+            },
+            {
+              q: "Travailler sans être déclaré est :",
+              r: "Interdit (travail au noir), puni par la loi",
+              d: [
+                "Autorisé pour moins de 10h par semaine",
+                "Toléré si c'est temporaire",
+                "Autorisé avec accord de l'employeur",
+              ],
+            },
+            {
+              q: "Quelle est la mission de France Travail ?",
+              r: "Aider les demandeurs d'emploi à trouver un travail",
+              d: [
+                "Former les travailleurs",
+                "Payer les salaires",
+                "Contrôler les entreprises",
+              ],
+            },
+            {
+              q: "Qui peut demander un congé parental d'éducation ?",
+              r: "Tout parent salarié, père ou mère",
+              d: [
+                "Seulement la mère",
+                "Seulement le père",
+                "Les deux parents ensemble",
+              ],
+            },
+            {
+              q: "Concernant l'accès aux soins, quelle proposition est correcte ?",
+              r: "Toute personne a droit à des soins, avec ou sans papiers",
+              d: [
+                "Seuls les citoyens français ont droit aux soins",
+                "Il faut une carte vitale obligatoirement",
+                "Les soins sont payants pour les étrangers",
+              ],
+            },
+            {
+              q: "En cas de divorce, qui exerce l'autorité parentale ?",
+              r: "Les deux parents (autorité parentale conjointe)",
+              d: [
+                "Celui qui a la garde",
+                "La mère uniquement",
+                "Celui désigné par le juge",
+              ],
+            },
+            {
+              q: "Quel mariage est reconnu par l'État ?",
+              r: "Le mariage civil célébré à la mairie",
+              d: [
+                "Le mariage religieux",
+                "Les deux types de mariage",
+                "Le PACS",
+              ],
+            },
+          ],
+        };
 
-          const [allQuestions, setAllQuestions] = useState([]);
-          const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-          const [selectedAnswer, setSelectedAnswer] = useState(null);
-          const [score, setScore] = useState(0);
-          const [showResult, setShowResult] = useState(false);
-          const [isAnswered, setIsAnswered] = useState(false);
-          const [quizStarted, setQuizStarted] = useState(false);
-          const [numberOfQuestions, setNumberOfQuestions] = useState(20);
+        const [allQuestions, setAllQuestions] = useState([]);
+        const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+        const [selectedAnswer, setSelectedAnswer] = useState(null);
+        const [score, setScore] = useState(0);
+        const [showResult, setShowResult] = useState(false);
+        const [isAnswered, setIsAnswered] = useState(false);
+        const [quizStarted, setQuizStarted] = useState(false);
+        const [numberOfQuestions, setNumberOfQuestions] = useState(20);
 
-          const shuffleArray = (array) => {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
-          };
+        const shuffleArray = (array) => {
+          const newArray = [...array];
+          for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+          }
+          return newArray;
+        };
 
-          const prepareQuestions = () => {
-            const prepared = [];
-            Object.entries(questionsData).forEach(([theme, questions]) => {
-              questions.forEach(item => {
-                const allAnswers = shuffleArray([item.r, ...item.d]);
-                prepared.push({
-                  theme,
-                  question: item.q,
-                  correctAnswer: item.r,
-                  answers: allAnswers
-                });
+        const prepareQuestions = () => {
+          const prepared = [];
+          Object.entries(questionsData).forEach(([theme, questions]) => {
+            questions.forEach((item) => {
+              const allAnswers = shuffleArray([item.r, ...item.d]);
+              prepared.push({
+                theme,
+                question: item.q,
+                correctAnswer: item.r,
+                answers: allAnswers,
               });
             });
-            return shuffleArray(prepared).slice(0, numberOfQuestions);
-          };
+          });
+          return shuffleArray(prepared).slice(0, numberOfQuestions);
+        };
 
-          const startQuiz = () => {
-            setAllQuestions(prepareQuestions());
-            setCurrentQuestionIndex(0);
-            setScore(0);
-            setShowResult(false);
-            setQuizStarted(true);
-          };
+        const startQuiz = () => {
+          setAllQuestions(prepareQuestions());
+          setCurrentQuestionIndex(0);
+          setScore(0);
+          setShowResult(false);
+          setQuizStarted(true);
+        };
 
-          const handleAnswerClick = (answer) => {
-            if (isAnswered) return;
-            
-            setSelectedAnswer(answer);
-            setIsAnswered(true);
-            
-            if (answer === allQuestions[currentQuestionIndex].correctAnswer) {
-              setScore(score + 1);
-            }
-          };
+        const handleAnswerClick = (answer) => {
+          if (isAnswered) return;
 
-          const handleNext = () => {
-            if (currentQuestionIndex < allQuestions.length - 1) {
-              setCurrentQuestionIndex(currentQuestionIndex + 1);
-              setSelectedAnswer(null);
-              setIsAnswered(false);
-            } else {
-              setShowResult(true);
-            }
-          };
+          setSelectedAnswer(answer);
+          setIsAnswered(true);
 
-          const restartQuiz = () => {
-            setQuizStarted(false);
-            setCurrentQuestionIndex(0);
+          if (answer === allQuestions[currentQuestionIndex].correctAnswer) {
+            setScore(score + 1);
+          }
+        };
+
+        const handleNext = () => {
+          if (currentQuestionIndex < allQuestions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
             setSelectedAnswer(null);
-            setScore(0);
-            setShowResult(false);
             setIsAnswered(false);
-          };
-
-          if (!quizStarted) {
-            return (
-              <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-                <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
-                  <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-indigo-900 mb-4">
-                      QCM Examen Civique
-                    </h1>
-                    <p className="text-lg text-gray-600 mb-2">
-                      Préparez-vous pour l'examen de la carte de résident
-                    </p>
-                    <div className="w-24 h-1 bg-indigo-600 mx-auto rounded"></div>
-                  </div>
-                  
-                  <div className="mb-8">
-                    <label className="block text-lg font-semibold text-gray-700 mb-3">
-                      Nombre de questions :
-                    </label>
-                    <div className="flex gap-3 flex-wrap justify-center">
-                      {[10, 20, 30, 50].map(num => (
-                        <button
-                          key={num}
-                          onClick={() => setNumberOfQuestions(num)}
-                          className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                            numberOfQuestions === num
-                              ? 'bg-indigo-600 text-white shadow-lg scale-105'
-                              : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                          }`}
-                        >
-                          {num}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={startQuiz}
-                    className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xl font-bold py-4 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
-                  >
-                    Commencer le QCM
-                  </button>
-
-                  <div className="mt-8 p-6 bg-blue-50 rounded-xl">
-                    <h3 className="font-semibold text-gray-800 mb-3 text-lg">📚 Thématiques couvertes :</h3>
-                    <ul className="space-y-2 text-gray-700">
-                      <li>✓ Principes et valeurs de la République</li>
-                      <li>✓ Système institutionnel et politique</li>
-                      <li>✓ Droits et devoirs</li>
-                      <li>✓ Histoire, géographie et culture</li>
-                      <li>✓ Vivre dans la société française</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            );
+          } else {
+            setShowResult(true);
           }
+        };
 
-          if (showResult) {
-            const percentage = Math.round((score / allQuestions.length) * 100);
-            const passed = percentage >= 50;
-            
-            return (
-              <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-                <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
-                  <div className="text-center">
-                    <div className={`text-6xl mb-6`}>
-                      {passed ? '🎉' : '📚'}
-                    </div>
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                      {passed ? 'Félicitations !' : 'Continuez vos efforts !'}
-                    </h2>
-                    <div className="mb-8">
-                      <div className="text-6xl font-bold text-indigo-600 mb-2">
-                        {score}/{allQuestions.length}
-                      </div>
-                      <div className="text-2xl font-semibold text-gray-700">
-                        {percentage}% de réussite
-                      </div>
-                    </div>
-                    
-                    <div className="mb-8 p-6 bg-gray-50 rounded-xl">
-                      <p className="text-lg text-gray-700">
-                        {passed 
-                          ? "Excellent ! Vous avez une bonne maîtrise des connaissances civiques." 
-                          : "Continuez à réviser pour améliorer votre score. La réussite à l'examen nécessite au moins 50% de bonnes réponses."}
-                      </p>
-                    </div>
+        const restartQuiz = () => {
+          setQuizStarted(false);
+          setCurrentQuestionIndex(0);
+          setSelectedAnswer(null);
+          setScore(0);
+          setShowResult(false);
+          setIsAnswered(false);
+        };
 
-                    <button
-                      onClick={restartQuiz}
-                      className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xl font-bold py-4 px-8 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
-                    >
-                      Recommencer
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-
-          const currentQuestion = allQuestions[currentQuestionIndex];
-
+        if (!quizStarted) {
           return (
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-              <div className="max-w-3xl mx-auto">
-                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                  <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white">
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-lg font-semibold">
-                        Question {currentQuestionIndex + 1}/{allQuestions.length}
-                      </span>
-                      <span className="text-lg font-semibold">
-                        Score: {score}/{currentQuestionIndex + (isAnswered ? 1 : 0)}
-                      </span>
-                    </div>
-                    <div className="w-full bg-white/30 rounded-full h-3">
-                      <div 
-                        className="bg-white h-3 rounded-full transition-all duration-500"
-                        style={{ width: `${((currentQuestionIndex + 1) / allQuestions.length) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
+              <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+                <div className="text-center mb-8">
+                  <h1 className="text-4xl font-bold text-indigo-900 mb-4">
+                    QCM Examen Civique
+                  </h1>
+                  <p className="text-lg text-gray-600 mb-2">
+                    Préparez-vous pour l'examen de la carte de résident
+                  </p>
+                  <div className="w-24 h-1 bg-indigo-600 mx-auto rounded"></div>
+                </div>
 
-                  <div className="p-8">
-                    <div className="mb-4">
-                      <span className="inline-block bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">
-                        {currentQuestion.theme}
-                      </span>
-                    </div>
-
-                    <h2 className="text-2xl font-bold text-gray-800 mb-8">
-                      {currentQuestion.question}
-                    </h2>
-
-                    <div className="space-y-4 mb-8">
-                      {currentQuestion.answers.map((answer, index) => {
-                        const isCorrect = answer === currentQuestion.correctAnswer;
-                        const isSelected = selectedAnswer === answer;
-                        
-                        let buttonClass = "w-full p-5 text-left rounded-xl border-2 transition-all font-medium ";
-                        
-                        if (!isAnswered) {
-                          buttonClass += "border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer";
-                        } else {
-                          if (isCorrect) {
-                            buttonClass += "border-green-500 bg-green-50 text-green-900";
-                          } else if (isSelected) {
-                            buttonClass += "border-red-500 bg-red-50 text-red-900";
-                          } else {
-                            buttonClass += "border-gray-200 bg-gray-50 text-gray-500";
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={index}
-                            onClick={() => handleAnswerClick(answer)}
-                            disabled={isAnswered}
-                            className={buttonClass}
-                          >
-                            <div className="flex items-center justify-between">
-                              <span>{answer}</span>
-                              {isAnswered && isCorrect && <span className="text-2xl">✓</span>}
-                              {isAnswered && isSelected && !isCorrect && <span className="text-2xl">✗</span>}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {isAnswered && (
-                      <div className="mb-6">
-                        <div className={`p-5 rounded-xl ${
-                          selectedAnswer === currentQuestion.correctAnswer 
-                            ? 'bg-green-50 border-2 border-green-500' 
-                            : 'bg-red-50 border-2 border-red-500'
-                        }`}>
-                          <p className={`font-semibold mb-2 ${
-                            selectedAnswer === currentQuestion.correctAnswer 
-                              ? 'text-green-900' 
-                              : 'text-red-900'
-                          }`}>
-                            {selectedAnswer === currentQuestion.correctAnswer 
-                              ? '✓ Bonne réponse !' 
-                              : '✗ Mauvaise réponse'}
-                          </p>
-                          {selectedAnswer !== currentQuestion.correctAnswer && (
-                            <p className="text-gray-700">
-                              La bonne réponse est : <strong>{currentQuestion.correctAnswer}</strong>
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {isAnswered && (
+                <div className="mb-8">
+                  <label className="block text-lg font-semibold text-gray-700 mb-3">
+                    Nombre de questions :
+                  </label>
+                  <div className="flex gap-3 flex-wrap justify-center">
+                    {[10, 20, 30, 50].map((num) => (
                       <button
-                        onClick={handleNext}
-                        className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-lg font-bold py-4 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                        key={num}
+                        onClick={() => setNumberOfQuestions(num)}
+                        className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                          numberOfQuestions === num
+                            ? "bg-indigo-600 text-white shadow-lg scale-105"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
                       >
-                        {currentQuestionIndex < allQuestions.length - 1 ? 'Question suivante' : 'Voir les résultats'}
+                        {num}
                       </button>
-                    )}
+                    ))}
                   </div>
+                </div>
+
+                <button
+                  onClick={startQuiz}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xl font-bold py-4 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                  Commencer le QCM
+                </button>
+
+                <div className="mt-8 p-6 bg-blue-50 rounded-xl">
+                  <h3 className="font-semibold text-gray-800 mb-3 text-lg">
+                    📚 Thématiques couvertes :
+                  </h3>
+                  <ul className="space-y-2 text-gray-700">
+                    <li>✓ Principes et valeurs de la République</li>
+                    <li>✓ Système institutionnel et politique</li>
+                    <li>✓ Droits et devoirs</li>
+                    <li>✓ Histoire, géographie et culture</li>
+                    <li>✓ Vivre dans la société française</li>
+                  </ul>
                 </div>
               </div>
             </div>
           );
-        };
+        }
 
-        ReactDOM.render(<QCMExamenCivique />, document.getElementById('root'));
+        if (showResult) {
+          const percentage = Math.round((score / allQuestions.length) * 100);
+          const passed = percentage >= 50;
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+              <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+                <div className="text-center">
+                  <div className={`text-6xl mb-6`}>{passed ? "🎉" : "📚"}</div>
+                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                    {passed ? "Félicitations !" : "Continuez vos efforts !"}
+                  </h2>
+                  <div className="mb-8">
+                    <div className="text-6xl font-bold text-indigo-600 mb-2">
+                      {score}/{allQuestions.length}
+                    </div>
+                    <div className="text-2xl font-semibold text-gray-700">
+                      {percentage}% de réussite
+                    </div>
+                  </div>
+
+                  <div className="mb-8 p-6 bg-gray-50 rounded-xl">
+                    <p className="text-lg text-gray-700">
+                      {passed
+                        ? "Excellent ! Vous avez une bonne maîtrise des connaissances civiques."
+                        : "Continuez à réviser pour améliorer votre score. La réussite à l'examen nécessite au moins 50% de bonnes réponses."}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={restartQuiz}
+                    className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-xl font-bold py-4 px-8 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                  >
+                    Recommencer
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        const currentQuestion = allQuestions[currentQuestionIndex];
+
+        return (
+          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-lg font-semibold">
+                      Question {currentQuestionIndex + 1}/{allQuestions.length}
+                    </span>
+                    <span className="text-lg font-semibold">
+                      Score: {score}/
+                      {currentQuestionIndex + (isAnswered ? 1 : 0)}
+                    </span>
+                  </div>
+                  <div className="w-full bg-white/30 rounded-full h-3">
+                    <div
+                      className="bg-white h-3 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${
+                          ((currentQuestionIndex + 1) / allQuestions.length) *
+                          100
+                        }%`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className="p-8">
+                  <div className="mb-4">
+                    <span className="inline-block bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-semibold">
+                      {currentQuestion.theme}
+                    </span>
+                  </div>
+
+                  <h2 className="text-2xl font-bold text-gray-800 mb-8">
+                    {currentQuestion.question}
+                  </h2>
+
+                  <div className="space-y-4 mb-8">
+                    {currentQuestion.answers.map((answer, index) => {
+                      const isCorrect =
+                        answer === currentQuestion.correctAnswer;
+                      const isSelected = selectedAnswer === answer;
+
+                      let buttonClass =
+                        "w-full p-5 text-left rounded-xl border-2 transition-all font-medium ";
+
+                      if (!isAnswered) {
+                        buttonClass +=
+                          "border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer";
+                      } else {
+                        if (isCorrect) {
+                          buttonClass +=
+                            "border-green-500 bg-green-50 text-green-900";
+                        } else if (isSelected) {
+                          buttonClass +=
+                            "border-red-500 bg-red-50 text-red-900";
+                        } else {
+                          buttonClass +=
+                            "border-gray-200 bg-gray-50 text-gray-500";
+                        }
+                      }
+
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => handleAnswerClick(answer)}
+                          disabled={isAnswered}
+                          className={buttonClass}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>{answer}</span>
+                            {isAnswered && isCorrect && (
+                              <span className="text-2xl">✓</span>
+                            )}
+                            {isAnswered && isSelected && !isCorrect && (
+                              <span className="text-2xl">✗</span>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {isAnswered && (
+                    <div className="mb-6">
+                      <div
+                        className={`p-5 rounded-xl ${
+                          selectedAnswer === currentQuestion.correctAnswer
+                            ? "bg-green-50 border-2 border-green-500"
+                            : "bg-red-50 border-2 border-red-500"
+                        }`}
+                      >
+                        <p
+                          className={`font-semibold mb-2 ${
+                            selectedAnswer === currentQuestion.correctAnswer
+                              ? "text-green-900"
+                              : "text-red-900"
+                          }`}
+                        >
+                          {selectedAnswer === currentQuestion.correctAnswer
+                            ? "✓ Bonne réponse !"
+                            : "✗ Mauvaise réponse"}
+                        </p>
+                        {selectedAnswer !== currentQuestion.correctAnswer && (
+                          <p className="text-gray-700">
+                            La bonne réponse est :{" "}
+                            <strong>{currentQuestion.correctAnswer}</strong>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {isAnswered && (
+                    <button
+                      onClick={handleNext}
+                      className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white text-lg font-bold py-4 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+                    >
+                      {currentQuestionIndex < allQuestions.length - 1
+                        ? "Question suivante"
+                        : "Voir les résultats"}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      ReactDOM.render(<QCMExamenCivique />, document.getElementById("root"));
     </script>
-</body>
+  </body>
 </html>
